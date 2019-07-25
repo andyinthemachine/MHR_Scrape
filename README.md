@@ -8,7 +8,7 @@
 
 ##### Back End/Sever side is Javascript/Express/Axios/mongoDB/mongoose/cheerio/Node.js
 
-##### Client side has data persistence using MongoDB database.
+##### Features data persistence using MongoDB database.
 
 #### Scrapes Broncos fan site Mile High Report for articles
 
