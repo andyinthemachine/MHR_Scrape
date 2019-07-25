@@ -20,29 +20,21 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost/MHR_Scrape", { useNewUrlParser: true });
 
 
-app.get("/scrape", function(req, res) {
-  axios.get("http://www.milehighreport.com/").then(function(response) {
+app.get("/", function (req, res) {
+  axios.get("http://www.milehighreport.com/").then(function (response) {
 
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
-    $(".c-entry-box--compact--article").each(function(i, element) {
+    $(".c-entry-box--compact--article").each(function (i, element) {
       var result = {};
-
       result.link = $(this).children("a").attr("href");
       result.title = $(this).find("h2.c-entry-box--compact__title").find("a").text();
       result.summary = $(this).find("p").text();
-      // result.title = "title";
-      // result.link = "link";
 
-      // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function(dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          // If an error occurred, log it
+      db.Article.create(result).then(function (dbArticle) {
+        console.log(dbArticle);
+      })
+        .catch(function (err) {
           console.log(err);
         });
     });
@@ -50,57 +42,36 @@ app.get("/scrape", function(req, res) {
   });
 });
 
-// Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
-  // Grab every document in the Articles collection
-  db.Article.find({})
-    .then(function(dbArticle) {
-      // If we were able to successfully find Articles, send them back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
+app.get("/articles", function (req, res) {
+  db.Article.find({}).then(function (dbArticle) {
+    res.json(dbArticle);
+  })
+    .catch(function (err) {
       res.json(err);
     });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
-app.get("/articles/:id", function(req, res) {
-  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  db.Article.findOne({ _id: req.params.id })
-    // ..and populate all of the notes associated with it
-    .populate("note")
-    .then(function(dbArticle) {
-      // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
+app.get("/articles/:id", function (req, res) {
+  db.Article.findOne({ _id: req.params.id }).populate("note").then(function (dbArticle) {
+    res.json(dbArticle);
+  })
+    .catch(function (err) {
       res.json(err);
     });
 });
 
-// Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function(req, res) {
-  // Create a new note and pass the req.body to the entry
-  db.Note.create(req.body)
-    .then(function(dbNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-      // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-    })
-    .then(function(dbArticle) {
-      // If we were able to successfully update an Article, send it back to the client
+app.post("/articles/:id", function (req, res) {
+  db.Note.create(req.body).then(function (dbNote) {
+    return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+  })
+    .then(function (dbArticle) {
       res.json(dbArticle);
     })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
+    .catch(function (err) {
       res.json(err);
     });
 });
 
-// Start the server
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
 });
