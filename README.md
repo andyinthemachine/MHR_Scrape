@@ -6,10 +6,9 @@
 
 ##### Front end/client side is HTML/CSS/Javascript/JQuery/Ajax
 
-##### Back End/Sever side is Javascript/Express/Axios/Handelbars/mongoDB/mongoose/cheerio/Node.js
+##### Back End/Sever side is Javascript/Express/Axios/mongoDB/mongoose/cheerio/Node.js
 
 ##### Client side has data persistence using MongoDB database.
-
 
 #### Scrapes Broncos fan site Mile High Report for articles
 

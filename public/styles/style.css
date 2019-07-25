@@ -1,5 +1,13 @@
 
-body { background-color: #F2F6D0 }
+body { 
+  background-color: rgb(238, 87, 27);
+  background-image: url("https://cutterbuck.com/product_images/uploaded_images/denver-logoslick-3-mobile.png");
+  background-repeat: no-repeat;
+  background-size: 960px 780px;
+
+
+ }
+
 #wrapper {
   width: 960px;
   margin-left: auto;
@@ -9,7 +17,7 @@ body { background-color: #F2F6D0 }
 #articles {
   display: inline-block;
   overflow: auto;
-  width: 60%;
+  width: 70%;
   height: 700px;
 }
 #notes {
@@ -19,7 +27,7 @@ body { background-color: #F2F6D0 }
 textarea, input {
   display: block;
   width: 100%;
-  background-color: #FCF5C7;
+  background-color: rgb(78, 116, 173);
 }
 input {
   height: 36px;
