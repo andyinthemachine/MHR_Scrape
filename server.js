@@ -2,54 +2,38 @@ var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models
 var db = require("./models");
 
 var PORT = 3000;
 
-// Initialize Express
 var app = express();
 
-// Configure middleware
-
-// Use morgan logger for logging requests
 app.use(logger("dev"));
-// Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Make public a static folder
+
 app.use(express.static("public"));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/MHR_Scrape", { useNewUrlParser: true });
 
-// Routes
 
-// A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
+  axios.get("http://www.milehighreport.com/").then(function(response) {
+
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
-      // Save an empty result object
+    $(".c-entry-box--compact--article").each(function(i, element) {
       var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
+      result.link = $(this).children("a").attr("href");
+      result.title = $(this).find("h2.c-entry-box--compact__title").find("a").text();
+      result.summary = $(this).find("p").text();
+      // result.title = "title";
+      // result.link = "link";
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
@@ -62,8 +46,6 @@ app.get("/scrape", function(req, res) {
           console.log(err);
         });
     });
-
-    // Send a message to the client
     res.send("Scrape Complete");
   });
 });

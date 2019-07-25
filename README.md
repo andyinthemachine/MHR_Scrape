@@ -2,7 +2,7 @@
 
 ### **MHR Scraper App**  
 
-#### **Author -** **Andrew Ulrich**
+#### **Authors  -** **Andrew Ulrich** 
 
 ##### Front end/client side is HTML/CSS/Javascript/JQuery/Ajax
 
