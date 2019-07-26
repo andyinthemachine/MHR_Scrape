@@ -14,13 +14,13 @@ body {
   margin-right: auto;
   padding-top: 5%;
 }
-#articles {
+#mhr-articles {
   display: inline-block;
   overflow: auto;
   width: 70%;
   height: 700px;
 }
-#notes {
+#mhr-notes {
   float: right;
   width: 30%;
 }
@@ -36,4 +36,15 @@ input {
 textarea {
   height: 200px;
   font-size: 18px;
+}
+::placeholder {
+  color: black;
+}
+#deletenote{ 
+  margin-top: 10px;
+  margin-left: 20px;
+}
+#savenote{ 
+  margin-top: 10px;
+  margin-left: 35px;
 }
