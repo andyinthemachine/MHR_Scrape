@@ -21,11 +21,11 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MHR_Scrape";
 mongoose.connect(MONGODB_URI);
 
 
-
 mongoose.connect("mongodb://localhost/MHR_Scrape", { useNewUrlParser: true });
 
 
-app.get("/", function (req, res) {
+app.get("/scrape", function (req, res) {
+  console.log("scrape");
   axios.get("http://www.milehighreport.com/").then(function (response) {
 
     var $ = cheerio.load(response.data);

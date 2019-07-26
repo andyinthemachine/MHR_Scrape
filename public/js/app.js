@@ -5,7 +5,7 @@
 $.getJSON("/articles", function (data) {
 
   $article_list = $("#mhr-articles");
-
+  console.log(data);
   const $articles = data.map(function (article) {
     const $new_article = $('<h3>').text(article.title).append(
       $('<p>').text(article.summary),
