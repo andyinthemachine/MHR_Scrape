@@ -4,8 +4,6 @@ body {
   background-image: url("https://cutterbuck.com/product_images/uploaded_images/denver-logoslick-3-mobile.png");
   background-repeat: no-repeat;
   background-size: 960px 780px;
-
-
  }
 
 #wrapper {
@@ -54,12 +52,5 @@ textarea {
 }
 .note-button{ 
   margin-left: 20px;
-  background-color: rgb(78, 116, 173);
-}
-
-.scrape-button{
-  /* margin-left: 50px;
-  margin-top: 20px; */
-
   background-color: rgb(78, 116, 173);
 }

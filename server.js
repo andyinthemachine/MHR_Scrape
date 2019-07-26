@@ -25,7 +25,6 @@ mongoose.connect("mongodb://localhost/MHR_Scrape", { useNewUrlParser: true });
 
 
 app.get("/scrape", function (req, res) {
-  console.log("scrape");
   axios.get("http://www.milehighreport.com/").then(function (response) {
 
     var $ = cheerio.load(response.data);
@@ -78,23 +77,26 @@ app.post("/articles/:id", function (req, res) {
     });
 });
 
-//Delete
-exports.delete_offer = function (req,res){
-  Offer.findOneAndRemove({_id : new mongoose.mongo.ObjectID(req.params.id)}, function (err,offer){
-    res.redirect('/newsfeed');
-  });
-};
-
-app.delete("/notes/:id", function (req, res) {
-  db.Note.findOneAndRemove({_id: req.params.id}, function (err) {
-    if (err)
-      res.send(err);
-    else
-      res.end();
-  });
-});
-
 
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
 });
+
+
+
+// exports.delete_offer = function (req,res){
+//   Offer.findOneAndRemove({_id : new mongoose.mongo.ObjectID(req.params.id)}, function (err,offer){
+//     res.redirect('/newsfeed');
+//   });
+// };
+
+// app.delete("/notes/:id", function (req, res) {
+//   db.Note.findOneAndRemove({_id: req.params.id}, function (err) {
+//     if (err)
+//       res.send(err);
+//     else
+//       res.end();
+//   });
+// });
+
+
