@@ -1,22 +1,25 @@
 
 
 
-
-$.getJSON("/articles", function (data) {
-
-  $article_list = $("#mhr-articles");
-  console.log(data);
-  const $articles = data.map(function (article) {
-    const $new_article = $('<h3>').text(article.title).append(
-      $('<p>').text(article.summary),
-      $("<a>").text(`link`).attr("href", article.link),
-      $("<button>").attr({ class: "note-button", "data-id": article._id }).text(`comment`)
-    );
-    return $new_article;
+$(document).on("click", ".scrape-button", function () {
+  console.log("click");
+  $.get("/scrape").then(function (data) {
+    $.getJSON("/articles", function (data) {
+      $article_list = $("#mhr-articles");
+      // console.log(data);
+      const $articles = data.map(function (article) {
+        const $new_article = $('<h3>').text(article.title).append(
+          $('<p>').text(article.summary),
+          $("<a>").text(`link`).attr("href", article.link),
+          $("<button>").attr({ class: "note-button", "data-id": article._id }).text(`comment`)
+        );
+        return $new_article;
+      });
+      $article_list.append($articles);
+    });
   });
-  $article_list.append($articles);
+  $(".scrape-button").hide();
 });
-
 
 $("#mhr-articles").on("click", ".note-button", function () {
   $("#mhr-notes").empty();
@@ -62,3 +65,4 @@ $(document).on("click", "#delete-note", function () {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+

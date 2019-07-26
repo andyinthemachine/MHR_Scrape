@@ -55,5 +55,11 @@ textarea {
 .note-button{ 
   margin-left: 20px;
   background-color: rgb(78, 116, 173);
+}
 
+.scrape-button{
+  /* margin-left: 50px;
+  margin-top: 20px; */
+
+  background-color: rgb(78, 116, 173);
 }
