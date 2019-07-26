@@ -65,6 +65,7 @@ app.get("/articles/:id", function (req, res) {
     });
 });
 
+
 app.post("/articles/:id", function (req, res) {
   db.Note.create(req.body).then(function (dbNote) {
     return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
@@ -76,6 +77,23 @@ app.post("/articles/:id", function (req, res) {
       res.json(err);
     });
 });
+
+//Delete
+exports.delete_offer = function (req,res){
+  Offer.findOneAndRemove({_id : new mongoose.mongo.ObjectID(req.params.id)}, function (err,offer){
+    res.redirect('/newsfeed');
+  });
+};
+
+app.delete("/notes/:id", function (req, res) {
+  db.Note.findOneAndRemove({_id: req.params.id}, function (err) {
+    if (err)
+      res.send(err);
+    else
+      res.end();
+  });
+});
+
 
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");

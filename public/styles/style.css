@@ -40,11 +40,20 @@ textarea {
 ::placeholder {
   color: black;
 }
-#deletenote{ 
+#delete-note{ 
   margin-top: 10px;
   margin-left: 20px;
+  background-color: rgb(78, 116, 173);
+
 }
-#savenote{ 
+#save-note{ 
   margin-top: 10px;
   margin-left: 35px;
+  background-color: rgb(78, 116, 173);
+
+}
+.note-button{ 
+  margin-left: 20px;
+  background-color: rgb(78, 116, 173);
+
 }
