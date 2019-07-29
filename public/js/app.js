@@ -31,7 +31,10 @@ $("#mhr-articles").on("click", ".note-button", function () {
     if (data.note) {
       $("#titleinput").val(data.note.title);
       $("#bodyinput").val(data.note.body);
+      $("#delete-note").show();
     }
+    else
+      $("#delete-note").hide();
   });
 });
 
@@ -53,18 +56,29 @@ $(document).on("click", "#save-note", function () {
 
 
 $(document).on("click", "#delete-note", function () {
-  var thisId = $(this).attr("data-id");
-  $.ajax({
-    method: "POST", url: "/articles/" + thisId, data: {
-      title: "",
-      body: ""
-    }
-  }).then(function (data) {
+  var ArticleId = $(this).attr("data-id");
+  $.ajax({ method: "DELETE", url: "/notes/" + ArticleId }).then(function (data) {
     $("#mhr-notes").empty();
   });
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+// this one below works, but only by setting the note to empty string, rather than actually deleting it from the db
+
+// $(document).on("click", "#delete-note", function () {
+//   console.log("click");
+//   var thisId = $(this).attr("data-id");
+//   $.ajax({method: "POST", url: "/articles/" + thisId, data: {
+//       title: "",
+//       body: ""
+//     }
+//   }).then(function (data) {
+//     $("#mhr-notes").empty();
+//   });
+//   $("#titleinput").val("");
+//   $("#bodyinput").val("");
+// });
 
 
 
